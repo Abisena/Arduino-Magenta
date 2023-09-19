@@ -66,3 +66,53 @@ app.get("/get_light_status", (req, res) => {
 app.listen(port, () => {
   console.log(`Server berjalan di http://localhost:${port}`);
 });
+
+
+
+
+
+19-09-2023
+
+// Fungsi untuk mendapatkan data lampu berdasarkan ID
+export const getLampById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const lamp = await Lamp.findById(id);
+    if (!lamp) {
+      return res.status(404).json({ error: "Data lampu tidak ditemukan." });
+    }
+    res.status(200).json(lamp);
+  } catch (error) {
+    res.status(500).json({ error: "Gagal mendapatkan data lampu." });
+  }
+};
+
+// Fungsi untuk memperbarui data lampu berdasarkan ID
+export const updateLampById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedLamp = await Lamp.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    if (!updatedLamp) {
+      return res.status(404).json({ error: "Data lampu tidak ditemukan." });
+    }
+    res.status(200).json(updatedLamp);
+  } catch (error) {
+    res.status(500).json({ error: "Gagal memperbarui data lampu." });
+  }
+};
+
+// Fungsi untuk menghapus data lampu berdasarkan ID
+export const deleteLampById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedLamp = await Lamp.findByIdAndDelete(id);
+    if (!deletedLamp) {
+      return res.status(404).json({ error: "Data lampu tidak ditemukan." });
+    }
+    res.status(200).json({ message: "Data lampu berhasil dihapus." });
+  } catch (error) {
+    res.status(500).json({ error: "Gagal menghapus data lampu." });
+  }
+};

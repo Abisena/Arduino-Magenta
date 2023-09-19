@@ -1,33 +1,35 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const app = express();
+import express from "express";
+import createLamp from "./routes/ardu.js";
+import getAllLamps from "./routes/ardu.js";
+import db from "./config/conn.js";
+import bodyParser from "body-parser";
+
 const port = process.env.PORT || 3000;
 
+const app = express();
+
+app.use(express.json());
+
+app.use(createLamp);
+app.use(getAllLamps);
+
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-let lightStatus = "Mati"; // Status awal lampu
-
-app.get("/update_light", (req, res) => {
-  const onLightStatus = "Nyala";
-  const offLightStatus = "Mati";
-
-  if (lightStatus == onLightStatus) {
-    lightStatus = offLightStatus;
-  } else {
-    lightStatus = onLightStatus;
-  }
-
-  console.log("Status lampu otomatis diperbarui:", lightStatus);
-
-  // Kirim respons dengan status lampu yang diperbarui
-  res.json({ message: "Status lampu otomatis diperbarui", lightStatus });
+db.on("error", (err) => {
+  console.log(err);
 });
 
-app.get("/get_light_status", (req, res) => {
-  // Kirim status lampu yang diperoleh dari Arduino
-  res.json({ lightStatus });
+db.once("open", () => {
+  console.log("Connected to database");
 });
+
+// app.post("/data", (req, res) => {
+//   const dataFromESP8266 = req.body;
+//   console.log("Data received from ESP8266:", dataFromESP8266);
+//   res.status(200).json({ message: "Data received successfully" });
+// });
 
 app.listen(port, () => {
-  console.log(`Server berjalan di http://localhost:${port}`);
+  console.log(`Run Server http://localhost:${port}`);
 });
