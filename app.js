@@ -14,7 +14,7 @@ app.use(createLamp);
 app.use(getAllLamps);
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 db.on("error", (err) => {
   console.log(err);
