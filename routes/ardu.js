@@ -1,26 +1,33 @@
 import express from "express";
-import { createLamp, getAllLamps } from "../controllers/arduinos.js";
 import Lamp from "../models/arduino.js";
-import dummyData from "../dumy/dumy.js"; // Sesuaikan dengan lokasi berkas dummy data Anda
+import dummyData from "../dumy/dumy.js";
+import { createLamp, getAllLamps } from "../controllers/arduinos.js";
 
 const router = express.Router();
 
-router.post("/add", createLamp);
+router.post("/add", createLamp);    // menambahkan data
+router.get("/lampstatus", getAllLamps);   // menampilkan data
 
-router.post("/addDummy", async (req, res) => {
+router.post("/addDummy", async (req, res) => {    // menampilkan data dummy
   try {
     for (const data of dummyData) {
       const newLamp = new Lamp(data);
       await newLamp.save();
-    }
+    };
 
-    res.status(201).json({ message: "Data dummy berhasil ditambahkan." });
+    res
+      .status(201)
+      .json({ 
+        message: "Data dummy berhasil ditambahkan" 
+      });
+
   } catch (error) {
-    res.status(500).json({ error: "Gagal menambahkan data dummy." });
-  }
+    res
+      .status(500)
+      .json({ 
+        error: "Gagal menambahkan data dummy" 
+      });
+  };
 });
-
-// Rute untuk mendapatkan semua data lampu
-router.get("/lampstatus", getAllLamps);
 
 export default router;
