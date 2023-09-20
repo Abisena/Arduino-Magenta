@@ -52,3 +52,46 @@ export const getAllLamps = async (req, res) => {
       });
   };
 };
+
+export const deleteStatus = async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    if (!id) {
+      res
+        .status(400)
+        .json({ 
+          message: "Id is required" 
+        });
+
+      return;
+    }
+
+    const delItem = await Lamp.findOne({ _id: id });
+
+    if (!delItem) {
+      res
+        .status(404)
+        .json({ 
+          message: "Id not found" 
+        });
+
+      return;
+    }
+
+    await Lamp.deleteOne({ _id: id });
+
+    res
+      .status(200)
+      .json({ 
+        message: "Id deleted successfully" 
+      });
+
+  } catch (error) {
+    res
+      .status(500)
+      .json({ 
+        message: "Internal Server Error"
+      });
+  };
+};
