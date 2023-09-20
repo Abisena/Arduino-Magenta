@@ -55,36 +55,36 @@ export const getAllLamps = async (req, res) => {
 
 export const deleteStatus = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { ids } = req.body;
 
-    if (!id) {
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
       res
         .status(400)
         .json({ 
-          message: "Id is required" 
+          message: "Ids are required as an array" 
         });
 
       return;
     }
 
-    const delItem = await Lamp.findOne({ _id: id });
+    const delItems = await Lamp.find({ _id: { $in: ids } });
 
-    if (!delItem) {
+    if (delItems.length !== ids.length) {
       res
         .status(404)
         .json({ 
-          message: "Id not found" 
+          message: "Some Ids not found" 
         });
 
       return;
     }
 
-    await Lamp.deleteOne({ _id: id });
+    await Lamp.deleteMany({ _id: { $in: ids } });
 
     res
       .status(200)
       .json({ 
-        message: "Id deleted successfully" 
+        message: "Ids deleted successfully" 
       });
 
   } catch (error) {
