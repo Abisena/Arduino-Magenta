@@ -5,9 +5,11 @@ export const createLamp = async (req, res) => {
     const { 
       item, 
       status, 
-      time_at, 
     } = req.body;
 
+    const date = new Date();
+    const time_at = date.setHours(date.getHours() + 7);
+    
     const newLamp = new Lamp({
       item,
       status,
