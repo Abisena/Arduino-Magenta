@@ -10,12 +10,12 @@ export const createLamp = async (req, res) => {
     });
     await newLamp.save();
 
-    res.status(201).json({ message: "Data Lampu dibuat", data: newLamp });
+    res.status(201).json({ message: "Data berhasil dibuat", data: newLamp });
   } catch (error) {
     console.error(error);
     res
       .status(500)
-      .json({ message: "Terjadi kesalahan saat membuat data Lampu" });
+      .json({ message: "Terjadi kesalahan saat membuat data" });
   }
 };
 
@@ -24,6 +24,6 @@ export const getAllLamps = async (req, res) => {
     const lamps = await Lamp.find();
     res.status(200).json(lamps);
   } catch (error) {
-    res.status(500).json({ error: "Gagal mendapatkan data lampu." });
+    res.status(500).json({ error: "Gagal mendapatkan data" });
   }
 };

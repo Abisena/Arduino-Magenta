@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://127.0.0.1:27017/arduino_lamp", {
-  useNewUrlparser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  "mongodb+srv://arduino:arduino12345@cluster0.cmqrijy.mongodb.net/arduino_lamp",
+  {
+    useNewUrlparser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 const db = mongoose.connection;
 
