@@ -10,7 +10,7 @@ const arduinoSchema = new mongoose.Schema({
     required: true,
   },
   time_at: {
-    type: Date, // Menggunakan tipe data Date untuk waktu
+    type: String, // Menggunakan tipe data Date untuk waktu
     required: true,
   },
 });

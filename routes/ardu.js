@@ -3,7 +3,6 @@ import { createLamp, getAllLamps } from "../controllers/arduinos.js";
 import Lamp from "../models/arduino.js";
 import dummyData from "../dumy/dumy.js"; // Sesuaikan dengan lokasi berkas dummy data Anda
 
-
 const router = express.Router();
 
 router.post("/add", createLamp);
