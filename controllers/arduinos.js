@@ -28,17 +28,14 @@ export const createLamp = async (req, res) => {
   } catch (error) {
     console.error(error);
 <<<<<<< HEAD
-    res.status(500).json({ message: "Terjadi kesalahan saat membuat data" });
-    console.log(error);
-  }
-=======
-
-    res
-      .status(500)
+res.status(500)
       .json({ 
         message: "Terjadi kesalahan saat membuat data" 
       });
   };
+=======
+
+    
 >>>>>>> ce034b13a6a8d6edde4883c9854c4ba25f200e61
 };
 
