@@ -1,6 +1,6 @@
 import express from "express";
-import createLamp from "./routes/ardu.js";
-import getAllLamps from "./routes/ardu.js";
+import create from "./routes/ardu.js";
+import getAll from "./routes/ardu.js";
 import db from "./config/conn.js";
 import bodyParser from "body-parser";
 
@@ -10,8 +10,8 @@ const app = express();
 
 app.use(express.json());
 
-app.use(createLamp);
-app.use(getAllLamps);
+app.use(create);
+app.use(getAll);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

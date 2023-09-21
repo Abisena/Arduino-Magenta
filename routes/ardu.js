@@ -1,16 +1,16 @@
 import express from "express";
 import Lamp from "../models/arduino.js";
 import dummyData from "../dumy/dumy.js";
-import {
-  createLamp,
-  getAllLamps,
-  deleteStatus,
+import { 
+  create, 
+  getAll, 
+  deleteStatus, 
 } from "../controllers/arduinos.js";
 
 const router = express.Router();
 
-router.post("/add", createLamp); // menambahkan data
-router.get("/lampstatus", getAllLamps); // menampilkan data
+router.post("/add", create); // menambahkan data
+router.get("/status", getAll); // menampilkan data
 router.delete("/deleteStatus", deleteStatus); // menghapus data
 
 router.post("/addDummy", async (req, res) => {
