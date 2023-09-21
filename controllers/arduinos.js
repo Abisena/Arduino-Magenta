@@ -1,24 +1,34 @@
-import Lamp from "../models/arduino.js";
+import all from "../models/arduino.js";
 
-export const createLamp = async (req, res) => {
+export const create = async (req, res) => {
   try {
-    const { item, status } = req.body;
+    const { 
+      item, 
+      suhu, 
+      kelembapan, 
+      jarak, 
+      status, 
+    } = req.body;
 
     const date = new Date();
     const time_at = date.setHours(date.getHours() + 7);
 
-    const newLamp = new Lamp({
+    const newall = new all({
       item: item,
+      suhu: suhu,
+      kelembapan: kelembapan,
+      jarak: jarak,
       status: status,
       time_at: time_at,
     });
 
-    await newLamp.save();
+    await newall.save();
 
     res.status(201).json({
       message: "Data berhasil dibuat",
-      data: newLamp,
+      data: newall,
     });
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -27,11 +37,11 @@ export const createLamp = async (req, res) => {
   }
 };
 
-export const getAllLamps = async (req, res) => {
+export const getAll = async (req, res) => {
   try {
-    const lamps = await Lamp.find();
+    const alls = await all.find().sort({ time_at: 1 });
 
-    res.status(200).json(lamps);
+    res.status(200).json(alls);
   } catch (error) {
     res.status(500).json({
       error: "Gagal mendapatkan data",
@@ -51,17 +61,17 @@ export const deleteStatus = async (req, res) => {
       return;
     }
 
-    const delItems = await Lamp.find({ _id: { $in: ids } });
+    const delItems = await all.find({ _id: { $in: ids } });
 
     if (delItems.length !== ids.length) {
       res.status(404).json({
-        message: "Some Ids not found",
+        message: "Some Id not found",
       });
 
       return;
     }
 
-    await Lamp.deleteMany({ _id: { $in: ids } });
+    await all.deleteMany({ _id: { $in: ids } });
 
     res.status(200).json({
       message: "Ids deleted successfully",
